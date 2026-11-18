@@ -52,6 +52,21 @@ Probado en una **PS4 Slim CUH-2115B (southbridge Baikal), firmware 13.02 con Gol
 | Control | DualShock 4 + cable USB (para emparejarlo la primera vez) |
 | Opcional | Teclado y mouse USB (para la instalación es más cómodo) |
 
+### Modelos compatibles
+
+El "southbridge" es el chip que cambia entre revisiones y define qué tan bien funciona Linux:
+
+| Modelo | Tipo | Southbridge | Con ps4-multiboot |
+|---|---|---|---|
+| CUH-10xx / 11xx | PS4 original (Fat) | Aeolia | Sin probar por el autor de ps4-multiboot |
+| **CUH-12xx** (p. ej. **CUH-1215A**) | PS4 Fat (última revisión) | **Belize** | ✅ El mejor soportado (mismo chip que el PS4 Pro con el que se probó ps4-multiboot) |
+| CUH-20xx | PS4 Slim | Belize | ✅ |
+| **CUH-21xx / 22xx** (p. ej. **CUH-2115B**, la de este tutorial) | PS4 Slim | **Baikal** | ✅ Funciona (oficialmente "experimental": puede no escribir en memorias USB) |
+| CUH-70xx | PS4 Pro | Belize | ✅ Probado por ps4-multiboot (usa las 4 unidades de la GPU) |
+| CUH-71xx / 72xx | PS4 Pro | Baikal | ✅ Experimental |
+
+Todo este tutorial (scripts, configs y la imagen clonada) sirve igual en cualquiera: la GPU de la PS4 normal y la Slim es la misma (Liverpool) y el Wi-Fi/Bluetooth en ambas es Marvell.
+
 Clona este repositorio en tu PC y descarga de [ps4-multiboot](https://github.com/blue0x1/ps4-multiboot/releases) el payload `linux-2048mb.bin`, `bzImage`, `initramfs.cpio.gz`, `bootargs.txt`, `ps4-mesa.tar.xz` y la imagen base de Arch.
 
 ## 3. GoldHEN y Payload Guest
