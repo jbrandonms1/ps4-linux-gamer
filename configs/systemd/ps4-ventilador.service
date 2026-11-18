@@ -1,0 +1,10 @@
+# /etc/systemd/system/ps4-ventilador.service
+[Unit]
+Description=Ventilador PS4: acelerar desde 65 C (por defecto 75 C)
+After=multi-user.target
+[Service]
+Type=oneshot
+ExecStart=/usr/local/bin/ps4-ventilador 65000
+RemainAfterExit=yes
+[Install]
+WantedBy=multi-user.target

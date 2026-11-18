@@ -1,0 +1,2 @@
+# /etc/udev/rules.d/60-ntsync.rules — permite a Wine/Proton usar ntsync (mejor rendimiento en juegos de Windows)
+KERNEL=="ntsync", MODE="0660", GROUP="input", TAG+="uaccess"

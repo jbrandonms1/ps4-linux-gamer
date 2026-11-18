@@ -1,0 +1,10 @@
+# /etc/systemd/system/primer-arranque.service — para imágenes clonadas: cada PS4 genera sus propias llaves SSH
+[Unit]
+Description=Primer arranque: generar identidad propia (llaves SSH) en una PS4 nueva
+ConditionPathExists=!/etc/ssh/ssh_host_ed25519_key
+Before=sshd.service
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/ssh-keygen -A
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,4 @@
+# /etc/sudoers.d/zz-reposo  (el nombre empieza con "zz" para que se lea DESPUÉS de "wheel": la última regla gana)
+# Permite al modo reposo cambiar CPU y ventilador sin pedir contraseña, y nada más.
+archlinux ALL=(root) NOPASSWD: /usr/bin/cpupower frequency-set -g schedutil, /usr/bin/cpupower frequency-set -g performance
+archlinux ALL=(root) NOPASSWD: /usr/local/bin/ps4-ventilador 75000, /usr/local/bin/ps4-ventilador 65000

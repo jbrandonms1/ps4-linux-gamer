@@ -1,0 +1,12 @@
+#!/bin/sh
+# ~/.local/bin/fsr — Ejecuta un juego a menor resolución y lo escala a 1080p con AMD FSR (más FPS en la GPU de la PS4).
+# En Steam (Propiedades > Opciones de lanzamiento):
+#   fsr %command%                 -> 720p escalado (recomendado)
+#   FSR=rendimiento fsr %command% -> 540p escalado (más FPS)
+#   FSR=calidad fsr %command%     -> 900p escalado (mejor imagen)
+case "${FSR:-equilibrado}" in
+  rendimiento) W=960;  H=540 ;;
+  calidad)     W=1600; H=900 ;;
+  *)           W=1280; H=720 ;;
+esac
+exec gamescope -w $W -h $H -W 1920 -H 1080 -F fsr --fsr-sharpness 4 -f -r 60 -- gamemoderun mangohud "$@"

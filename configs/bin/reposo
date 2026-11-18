@@ -1,0 +1,18 @@
+#!/bin/sh
+# ~/.local/bin/reposo — Modo reposo ligero (el kernel de PS4 no soporta suspender):
+# apaga la pantalla, baja la CPU y el ventilador, pausa fondo/widget. Despierta con teclado, mouse o el control.
+SOCK=/tmp/fondo-mpv-$USER
+notify-send -t 2000 "Reposo" "Apagando pantalla... toca cualquier tecla o el control para volver"
+sleep 2
+echo '{"command":["set_property","pause",true]}' | socat - $SOCK >/dev/null 2>&1
+pkill -STOP -x conky
+sudo -n /usr/bin/cpupower frequency-set -g schedutil >/dev/null 2>&1
+sudo -n /usr/local/bin/ps4-ventilador 75000 >/dev/null 2>&1
+xset +dpms; xset dpms 0 0 0; sleep 1; xset dpms force off
+while sleep 1; do xset q | grep -q "Monitor is On" && break; done   # esperar a que alguien la despierte
+xset s off -dpms s noblank
+sudo -n /usr/bin/cpupower frequency-set -g performance >/dev/null 2>&1
+sudo -n /usr/local/bin/ps4-ventilador 65000 >/dev/null 2>&1
+pkill -CONT -x conky
+echo '{"command":["set_property","pause",false]}' | socat - $SOCK >/dev/null 2>&1
+notify-send -t 2000 "Reposo" "De vuelta"

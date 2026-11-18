@@ -1,0 +1,9 @@
+# No se distribuyen binarios, imágenes ni datos personales
+*.bin
+*.pkg
+*.tar.xz
+*.img
+bzImage
+initramfs.cpio.gz
+laptop.pub
+logs/

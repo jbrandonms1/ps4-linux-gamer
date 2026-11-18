@@ -1,0 +1,8 @@
+#!/bin/sh
+# ~/.local/bin/en-sesion <comando...> : ejecuta un programa gráfico con el entorno de la sesión (útil por SSH)
+P=$(pgrep -u "$(id -u)" -x lxqt-session | head -1)
+[ -n "$P" ] || { echo "No hay sesión gráfica"; exit 1; }
+while IFS= read -r -d "" kv; do
+  case "$kv" in DISPLAY=*|XAUTHORITY=*|XDG_*=*|DBUS_SESSION_BUS_ADDRESS=*|DESKTOP_SESSION=*|LANG=*|LC_*=*|VK_DRIVER_FILES=*|QT_*=*|GTK_*=*|PATH=*) export "$kv";; esac
+done < /proc/$P/environ
+exec setsid -f "$@" </dev/null >/dev/null 2>&1

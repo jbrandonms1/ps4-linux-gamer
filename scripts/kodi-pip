@@ -1,0 +1,21 @@
+#!/bin/sh
+# Alterna Kodi entre pantalla completa y ventana mini (siempre encima, esquina inferior derecha).
+FLAG=$HOME/.cache/kodi-pip
+W=$(wmctrl -l -x | awk 'tolower($3) ~ /kodi/ {print $1; exit}')
+[ -z "$W" ] && { notify-send "Kodi mini" "Kodi no está abierto"; exit 1; }
+mini() {
+  W=$(wmctrl -l -x | awk 'tolower($3) ~ /kodi/ {print $1; exit}')
+  wmctrl -i -r "$W" -b remove,fullscreen,maximized_vert,maximized_horz
+  wmctrl -i -r "$W" -e 0,1240,580,640,360
+  wmctrl -i -r "$W" -b add,above,sticky
+}
+if xprop -id "$W" _NET_WM_STATE | grep -q FULLSCREEN; then
+  mkdir -p "$(dirname "$FLAG")"; touch "$FLAG"
+  xdotool windowactivate --sync "$W" key backslash
+  for i in 1 2 3 4 5 6 7 8 9 10; do sleep 0.3; xprop -id "$W" _NET_WM_STATE | grep -q FULLSCREEN || break; done
+  for i in $(seq 12); do sleep 0.5; mini; done
+else
+  rm -f "$FLAG"
+  wmctrl -i -r "$W" -b remove,above,sticky
+  xdotool windowactivate --sync "$W" key backslash
+fi

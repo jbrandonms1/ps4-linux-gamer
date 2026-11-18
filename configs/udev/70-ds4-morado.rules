@@ -1,0 +1,4 @@
+# /etc/udev/rules.d/70-ds4-morado.rules — barra de luz del DualShock 4 en morado al conectarse
+ACTION=="add", SUBSYSTEM=="leds", KERNEL=="input*:red",   ATTR{brightness}="160"
+ACTION=="add", SUBSYSTEM=="leds", KERNEL=="input*:green", ATTR{brightness}="0"
+ACTION=="add", SUBSYSTEM=="leds", KERNEL=="input*:blue",  ATTR{brightness}="255"

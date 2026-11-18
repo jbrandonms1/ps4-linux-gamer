@@ -1,0 +1,8 @@
+#!/bin/sh
+# /usr/local/bin/ps4-ventilador [miligrados] — temperatura a partir de la cual el ventilador acelera.
+# Por defecto del sistema: 75000 (75 °C). Usamos 65000 para que la PS4 trabaje más fresca.
+UMBRAL=${1:-65000}
+for h in /sys/class/hwmon/hwmon*; do
+  if [ "$(cat $h/name 2>/dev/null)" = ps4_fan ]; then echo "$UMBRAL" > $h/temp1_crit; echo "ventilador: $(cat $h/temp1_crit)"; fi
+done
+exit 0

@@ -1,0 +1,8 @@
+# ~/.config/systemd/user/tv-filtrar.service
+[Unit]
+Description=Revisar canales de TV por internet que funcionan
+After=network-online.target
+[Service]
+Type=oneshot
+Nice=10
+ExecStart=%h/.local/bin/tv-filtrar.sh
